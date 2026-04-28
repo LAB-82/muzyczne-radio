@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Muzyczne Radio - MSI Dragon GitHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin:0; background:black; color:white; text-align:center; font-family:'Orbitron',sans-serif; overflow:hidden; }
+        #title { font-size: 50px; color: #ff2a2a; margin-top: 20px; text-shadow: 0 0 12px red; }
+        #trackBox { margin:30px auto; width:580px; height:60px; background:#050505; border:2px solid #ff2a2a; 
+                    box-shadow:0 0 25px rgba(255,0,0,0.4) inset; border-radius:8px; display:flex; align-items:center; 
+                    justify-content:center; position:relative; overflow:hidden; }
+        #trackDisplay { font-size:24px; color:#ff4444; white-space:nowrap; position:absolute; }
+        .marquee { animation: scrollText 15s linear infinite; padding-left:100%; }
+        @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-180%); } }
+        button { padding:15px 40px; background:#111; border:1px solid #444; color:#888; font-family:'Orbitron'; 
+                 cursor:pointer; margin:20px; font-weight:bold; transition:0.3s; }
+        button.active { background:#200; border-color:red; color:white; box-shadow:0 0 20px red; }
+        #clock { position:absolute; top:20px; right:20px; color:#555; }
+    </style>
+</head>
+<body>
+    <div id="clock">00:00:00</div>
+    <div id="title">Muzyczne Radio</div>
+    <div id="trackBox">
+        <div id="trackDisplay">INICJALIZACJA...</div>
+    </div>
+    <button id="playBtn" onclick="toggleRadio()">PLAY / STOP</button>
+    <audio id="audio" crossorigin="anonymous"></audio>
+
+    <script src="rds.js"></script>
+    <script>
+        const audio = document.getElementById("audio");
+        let isPlaying = false;
+
+        function toggleRadio() {
+            if (!isPlaying) {
+                audio.src = "https://stream.rcs.revma.com/gzwc1xcq042vv";
+                audio.play();
+                document.getElementById("playBtn").classList.add("active");
+                isPlaying = true;
+            } else {
+                audio.pause();
+                audio.src = "";
+                document.getElementById("playBtn").classList.remove("active");
+                isPlaying = false;
+            }
+        }
+
+        setInterval(() => {
+            document.getElementById("clock").innerText = new Date().toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>
